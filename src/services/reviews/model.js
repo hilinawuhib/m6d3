@@ -15,15 +15,14 @@ const Review = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-   comments: {
+    comments: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-  rate: {
+    rate: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    
   },
   { underscored: true }
 );

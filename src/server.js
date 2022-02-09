@@ -1,14 +1,14 @@
 import express from 'express';
 import productsRoutes from './services/products/products.js';
-import reviewsRoutes from'./services/reviews/reviews.js';
+//import reviewsRoutes from'./services/reviews/reviews.js';
 import { authenticateDatabase } from "./utils/db/connect.js"
 let server = express();
-const { PORT =3002} = process.env;
+const { PORT =3003} = process.env;
 server.use(express.json());
- server.use("/products",productsRoutes)
-  server.use("/reviews",reviewsRoutes)
+server.use("/products",productsRoutes);
+//server.use("/reviews",reviewsRoutes);
 server.listen(PORT,()=>{
-   authenticateDatabase() 
+   authenticateDatabase() ;
    console.log(`Server is listening on port ${PORT}`);
 })
 server.on("error", (error) => {

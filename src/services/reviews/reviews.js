@@ -15,31 +15,7 @@ reviewsRouter.get("/", async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 });
-reviewsRouter.get("/search", async (req, res, next) => {
-  try {
-    console.log({ query: req.query });
-    const reviews = await Review.findAll({
-      where: {
-        [Op.or]: [
-          {
-            comments: {
-              [Op.iLike]: `%${req.query.q}%`,
-            },
-          },
-          {
-            rate: {
-              [Op.iLike]: `%${req.query.q}%`,
-            },
-          },
-        ],
-      },
-      include: [Product],
-    });
-    res.send(reviews);
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-  }
-});
+
 reviewsRouter.get("/:id", async (req, res, next) => {
   try {
     const singleReview = await Review.findByPk(req.params.id);
