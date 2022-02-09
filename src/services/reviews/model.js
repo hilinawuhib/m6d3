@@ -7,7 +7,7 @@ import Sequelize from "sequelize";
 import Product from "../products/model.js";
 
 const Review = sequelize.define(
-  "review",
+  "reviews",
   {
     id: {
       type: DataTypes.UUID,

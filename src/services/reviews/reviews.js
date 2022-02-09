@@ -1,15 +1,12 @@
 import { Router } from "express";
-import Product from "../products/model.js";
-import { Op } from "sequelize";
+
 import Review from "./model.js";
 
 const reviewsRouter = Router();
 
 reviewsRouter.get("/", async (req, res, next) => {
   try {
-    const reviews = await Review.findAll({
-      include: [Product],
-    });
+    const reviews = await Review.findAll({});
     res.send(reviews);
   } catch (error) {
     res.status(500).send({ message: error.message });

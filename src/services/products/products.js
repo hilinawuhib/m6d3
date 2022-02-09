@@ -1,17 +1,20 @@
 import { Router } from "express";
 import Product from "./model.js";
+import Review from "../reviews/model.js"
 
 const productsRouter = Router();
 
 productsRouter.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll({});
+    const products = await Product.findAll({
+      include: [reviews],
+    });
     res.send(products);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 });
-productsRouter.get("/:id", async (req, res, next) => {
+productsRouter.get("/:products_id", async (req, res, next) => {
   try {
     const singleProduct = await Product.findByPk(req.params.id);
 
@@ -57,7 +60,7 @@ productsRouter.post("/", async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 });
-productsRouter.put("/:id", async (req, res, next) => {
+productsRouter.put("/:products_id", async (req, res, next) => {
   try {
     const [success, updatedProduct] = await Product.update(req.body, {
       where: { id: req.params.id },
@@ -73,7 +76,7 @@ productsRouter.put("/:id", async (req, res, next) => {
   }
 });
 
-productsRouter.delete("/:id", async (req, res, next) => {
+productsRouter.delete("/:products_id", async (req, res, next) => {
   try {
     await Product.destroy({
       where: {

@@ -7,10 +7,10 @@ import Sequelize from "sequelize";
 const Product = sequelize.define(
   "products",
   {
-   product_id: {
+   products_id: {
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4,
-      allowNull: false,
+     allowNull: false,
       primaryKey: true,
     },
     product_name: {
