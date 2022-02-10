@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Product from "./model.js";
+import { Op } from "sequelize";
 import Review from "../reviews/model.js";
 
 const productsRouter = Router();
@@ -56,6 +57,26 @@ productsRouter.get("/search", async (req, res, next) => {
       ...(req.query.order && { order: [req.query.order.split(",")] }),
     });
     res.send(products);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+productsRouter.get("/stats", async (req, res, next) => {
+  try {
+    const stats = await Review.findAll({
+      attributes: [
+        [
+          sequelize.cast(
+            sequelize.fn("count", sequelize.col("product_id")),
+            "integer"
+          ),
+          "numberOfComments",
+        ],
+      ],
+      group: ["product_id", "product.id", "product.review.id"],
+      include: [{ model: Product, include: [Review] }],
+    });
+    res.send(stats);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

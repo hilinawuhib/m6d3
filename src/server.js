@@ -3,7 +3,7 @@ import productsRoutes from "./services/products/product.js";
 import reviewsRoutes from "./services/reviews/review.js";
 import { authenticateDatabase } from "./utils/db/connect.js";
 const server = express();
-const { PORT = 3004 } = process.env;
+const { PORT = 3006 } = process.env;
 server.use(express.json());
 server.use("/products", productsRoutes);
 server.use("/reviews", reviewsRoutes);

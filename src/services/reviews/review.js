@@ -55,7 +55,11 @@ reviewsRouter.put("/:id", async (req, res, next) => {
 
 reviewsRouter.delete("/:id", async (req, res, next) => {
   try {
-    await Review.destroy({ id: req.params.id });
+    await Review.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
     res.status(204).send();
   } catch (error) {
     res.status(500).send({ message: error.message });
