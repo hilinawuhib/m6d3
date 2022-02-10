@@ -15,7 +15,7 @@ const Review = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    comments: {
+    texts: {
       type: DataTypes.TEXT,
       allowNull: false,
     },

@@ -1,20 +1,20 @@
 import { Router } from "express";
 import Product from "./model.js";
-import Review from "../reviews/model.js"
+import Review from "../reviews/model.js";
 
 const productsRouter = Router();
 
 productsRouter.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include: [reviews],
+      include: [Review],
     });
     res.send(products);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 });
-productsRouter.get("/:products_id", async (req, res, next) => {
+productsRouter.get("/:id", async (req, res, next) => {
   try {
     const singleProduct = await Product.findByPk(req.params.id);
 
@@ -29,23 +29,31 @@ productsRouter.get("/:products_id", async (req, res, next) => {
 });
 productsRouter.get("/search", async (req, res, next) => {
   try {
-    console.log({ query: req.query });
     const products = await Product.findAll({
       where: {
-        [Op.or]: [
-          {
-            product_name: {
-              [Op.iLike]: `%${req.query.q}%`,
+        ...(req.query.search && {
+          [Op.or]: [
+            {
+              product_name: {
+                [Op.iLike]: `%${req.query.search}%`,
+              },
             },
-          },
-          {
-            product_description: {
-              [Op.iLike]: `%${req.query.q}%`,
+            {
+              product_description: {
+                [Op.iLike]: `%${req.query.search}%`,
+              },
             },
+          ],
+        }),
+
+        ...(req.query.price && {
+          product_price: {
+            [Op.between]: req.query.price.split(","),
           },
-        ],
+        }),
       },
-      include: [Review],
+
+      ...(req.query.order && { order: [req.query.order.split(",")] }),
     });
     res.send(products);
   } catch (error) {
@@ -60,7 +68,7 @@ productsRouter.post("/", async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 });
-productsRouter.put("/:products_id", async (req, res, next) => {
+productsRouter.put("/:id", async (req, res, next) => {
   try {
     const [success, updatedProduct] = await Product.update(req.body, {
       where: { id: req.params.id },
@@ -69,14 +77,14 @@ productsRouter.put("/:products_id", async (req, res, next) => {
     if (success) {
       res.send(updatedProduct);
     } else {
-      res.status(404).setDefaultEncoding({ message: "no such product" });
+      res.status(404).send({ message: "no such product" });
     }
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 });
 
-productsRouter.delete("/:products_id", async (req, res, next) => {
+productsRouter.delete("/:id", async (req, res, next) => {
   try {
     await Product.destroy({
       where: {

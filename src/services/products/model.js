@@ -7,36 +7,37 @@ import Sequelize from "sequelize";
 const Product = sequelize.define(
   "products",
   {
-   products_id: {
+    id: {
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4,
-     allowNull: false,
+      allowNull: false,
       primaryKey: true,
     },
-    product_name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    product_description: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    product_brand: {
+    brand: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    product_category: {
+    category: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    product_price: {
+    price: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
     image_url: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80",
+      defaultValue:
+        "https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80",
       validate: {
         isURL: true,
       },
@@ -44,5 +45,6 @@ const Product = sequelize.define(
   },
   { underscored: true }
 );
+
 
 export default Product;

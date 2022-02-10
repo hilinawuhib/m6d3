@@ -6,7 +6,7 @@ const sequelize = new Sequelize(POSTGRES_URI, {
 
 export const authenticateDatabase = async () => {
   try {
-    await sequelize.authenticate({ loading: false });
+    await sequelize.authenticate({ logging: false });
     await sequelize.sync({ alter: true, logging: false });
     console.log("connection had been established");
   } catch (error) {

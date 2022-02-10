@@ -1,16 +1,16 @@
-import express from 'express';
-import productsRoutes from './services/products/products.js';
-import reviewsRoutes from'./services/reviews/reviews.js';
-import { authenticateDatabase } from "./utils/db/connect.js"
-let server = express();
-const { PORT =3003} = process.env;
+import express from "express";
+import productsRoutes from "./services/products/product.js";
+import reviewsRoutes from "./services/reviews/review.js";
+import { authenticateDatabase } from "./utils/db/connect.js";
+const server = express();
+const { PORT = 3004 } = process.env;
 server.use(express.json());
-server.use("/products",productsRoutes);
-server.use("/reviews",reviewsRoutes);
-server.listen(PORT,()=>{
-   authenticateDatabase() ;
-   console.log(`Server is listening on port ${PORT}`);
-})
+server.use("/products", productsRoutes);
+server.use("/reviews", reviewsRoutes);
+server.listen(PORT, () => {
+  authenticateDatabase();
+  console.log(`Server is listening on port ${PORT}`);
+});
 server.on("error", (error) => {
-    console.log(`Server is stopped : ${error}`);
-  });
+  console.log(`Server is stopped : ${error}`);
+});
