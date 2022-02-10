@@ -30,7 +30,7 @@ const User = sequelize.define(
 User.belongsTo(Review);
 
 Review.hasMany(User, {
-  onDelete: "CASCADE", // when blog is deleted , deletes all comments
+  onDelete: "CASCADE", 
 });
 
 export default User;
