@@ -1,14 +1,15 @@
 import Sequelize from "sequelize";
-const { POSTGRES_URI } = process.env;
-const sequelize = new Sequelize(POSTGRES_URI, {
-  dialectOptions: {         
+const { DB_LINK } = process.env;
+const sequelize = new Sequelize(process.env.DB_LINK, {
+  dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions: {
     ssl: {
       require: true,
       rejectUnauthorized: false,
     },
   },
 });
-
 export const authenticateDatabase = async () => {
   try {
     await sequelize.authenticate({ logging: false });
