@@ -1,15 +1,14 @@
 import Sequelize from "sequelize";
 
-const { DATABASE_URL} = process.env;
-const sequelize = new Sequelize( process.env.DATABASE_URL, {
+const { DATABASE_URL } = process.env;
+const sequelize = new Sequelize( DATABASE_URL, {
   dialect: "postgres",
   port: process.env.PORT,
- 
 
   dialectOptions: {
     ssl: {
-      require:true,
-       rejectUnauthorized: false,
+      require: true,
+      rejectUnauthorized: false,
     },
   },
 });
