@@ -1,7 +1,12 @@
 import Sequelize from "sequelize";
 const { POSTGRES_URI } = process.env;
 const sequelize = new Sequelize(POSTGRES_URI, {
-  dialect: "postgres",
+  dialectOptions: {         
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 export const authenticateDatabase = async () => {
