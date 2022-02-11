@@ -4,7 +4,7 @@ import sequelize from "../../utils/db/connect.js";
 
 import Sequelize from "sequelize";
 
-import Product from "./model.js";
+import Product from "../products/model.js";
 
 const Category = sequelize.define(
   "categories",

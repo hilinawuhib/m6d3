@@ -3,13 +3,14 @@ import Product from "./model.js";
 import { Op } from "sequelize";
 import Review from "../reviews/model.js";
 import sequelize from "sequelize";
+import Category from "../category/category-model.js";
 
 const productsRouter = Router();
 
 productsRouter.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include: [Review],
+      include: [Review,Category],
     });
     res.send(products);
   } catch (error) {

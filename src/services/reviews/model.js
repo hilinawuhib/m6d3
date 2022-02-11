@@ -4,6 +4,8 @@ import sequelize from "../../utils/db/connect.js";
 
 import Sequelize from "sequelize";
 
+import User from "./user-model.js";
+
 import Product from "../products/model.js";
 
 const Review = sequelize.define(
@@ -24,13 +26,13 @@ const Review = sequelize.define(
       allowNull: false,
     },
   },
-  { underscored: true }
+ 
 );
 
-Product.hasMany(Review, {
-  onDelete: "CASCADE",
-});
+User.hasMany(Review, { onDelete: "CASCADE" });
+Review.belongsTo(User, { onDelete: "CASCADE" });
 
-Review.belongsTo(Product);
+Product.hasMany(Review, { onDelete: "CASCADE" });
+Review.belongsTo(Product, { onDelete: "CASCADE" });
 
 export default Review;
