@@ -15,19 +15,6 @@ productsRouter.get("/", async (req, res, next) => {
     res.status(500).send({ message: error.message });
   }
 });
-productsRouter.get("/:id", async (req, res, next) => {
-  try {
-    const singleProduct = await Product.findByPk(req.params.id);
-
-    if (singleProduct) {
-      res.send(singleProduct);
-    } else {
-      res.status(404).send({ message: "no such product." });
-    }
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-  }
-});
 productsRouter.get("/search", async (req, res, next) => {
   try {
     const products = await Product.findAll({
@@ -77,6 +64,19 @@ productsRouter.get("/stats", async (req, res, next) => {
       include: [{ model: Product, include: [Review] }],
     });
     res.send(stats);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+productsRouter.get("/:id", async (req, res, next) => {
+  try {
+    const singleProduct = await Product.findByPk(req.params.id);
+
+    if (singleProduct) {
+      res.send(singleProduct);
+    } else {
+      res.status(404).send({ message: "no such product." });
+    }
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
